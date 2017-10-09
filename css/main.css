@@ -1,0 +1,37 @@
+body{
+	background-color: lightblue;
+}
+
+h1{
+	text-align: center;
+	width: 30%;
+	margin: 0 auto;
+}
+
+#title{
+	text-decoration: underline;
+}
+
+h5{
+	text-align: center;
+	margin: 2px;
+}
+
+table{
+	margin: 0 auto;
+}
+
+table tr td{
+	border: 1px solid black;
+}
+
+table tr td button{
+	width: 150px;
+	height:150px;
+	font-size: 7em;
+	background-color: 
+}
+
+footer p{
+	text-align: center;
+}
