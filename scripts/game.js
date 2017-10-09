@@ -124,8 +124,8 @@ function allSquaresFull(){
 }
 
 /*
-resetGame() resets the game by resetting game variables such as the turn and
-clearing all game squares, then hides the reset button. Return type void.
+resetGame() resets the game by clearing all game squares, 
+then hiding the reset button and other elements. Return type void.
 */
 function resetGame(){
 	//change all squares back to black text
@@ -142,6 +142,10 @@ function resetGame(){
 	againstAIButton.classList.remove("hide");
 }
 
+/*
+initGame() initializes the game by setting turn equal to "x" and displaying 
+the game board and other elements while hiding the game mode buttons. Return type void.
+*/
 function initGame(){
 	turn = "x";
 	instructionDisplay.innerHTML = "Click a square to mark it";

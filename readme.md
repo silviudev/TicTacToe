@@ -8,6 +8,8 @@ This game is made in HTML5 with CSS and Javascript, and can be played in any mod
 
 To play, open the main.html file using a browser that supports HTML5, CSS3 and Javascript 2015 or higher.
 
+You can play this game as well as learn more about me and my projects by visiting www.silviudev.com
+
 **Gameplay Instructions**
 
 This game is the traditional Tic Tac Toe game. One player represents "X" and the other represents "O". The players take turns marking one square on a 9x9 board with their letter one at a time. The first player to get 3 squares in a row with their letter wins! If all squares are marked but there is no winner the game ends in a tie. The 3 squares can be in a row horizontally, vertically or diagonally.
