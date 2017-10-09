@@ -9,12 +9,15 @@
 
 <body>
 	<h1 id="title">Tic Tac Toe Game</h1>
-	<h1 id="turnDisplay">X's Turn</h1>
-	<h5 id="instructions">Click a square to mark it</h2>
+	<h1 id="turnDisplay" class="hide"></h1>
+	<h5 id="instructions" class="hide">Click a square to mark it</h2>
 	
-	<button id="restart">RESTART</button>
+	<button id="restart" class="hide">RESTART</button>
+	
+	<button id="vsAI">Play Against the Computer</button>
+	<button id="twoPlayer">Play Two Player Mode</button>
 	<!--Table containing game gameSquares represented by buttons -->
-	<table>
+	<table id="board" class="hide">
 		<tr>
 			<td><button class="gameSquare"></button></td>
 			<td><button class="gameSquare"></button></td>

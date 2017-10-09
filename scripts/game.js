@@ -4,24 +4,44 @@ var gameSquareArray = Array.from(document.getElementsByClassName("gameSquare"));
 var turnDisplay = document.getElementById("turnDisplay");
 var resetButton = document.getElementById("restart");
 var instructionDisplay = document.getElementById("instructions");
+var againstAIButton = document.getElementById("vsAI");
+var twoPlayerButton = document.getElementById("twoPlayer");
+var gameBoard = document.getElementById("board");
 var turn = "x";
+var twoPlayerMode = false;
 
 resetButton.addEventListener("click", resetGame);
+
+againstAIButton.addEventListener("click", function(){
+	twoPlayerMode = false;
+	initGame();
+});
+
+twoPlayerButton.addEventListener("click", function(){
+	twoPlayerMode = true;
+	initGame();
+});
 
 gameSquareArray.forEach(function(item){
 	item.addEventListener("click", handleButtonClick);
 });
 
+/*
+handleButtonClick() takes the correct action when the user clicks a square, including
+doing nothing if the square is already set, setting the square's text to the right value, checking
+for win conditions and processing the AI's turn in one player mode. Return type void.
+*/
 function handleButtonClick(){
 	
 	if(this.touched || checkGameOverConditions() != ""){
 		return;
 	}
 	
+	//handle setting button to right value on click
 	if(turn === "x"){
 		this.innerHTML = "X";
 		this.touched = true;
-		turnDisplay.innerHTML = "O's turn";
+		turnDisplay.innerHTML = twoPlayerMode ? "O's turn" : "X's turn";
 		turn = "o";
 	}else{
 		this.innerHTML = "O";
@@ -29,10 +49,16 @@ function handleButtonClick(){
 		turnDisplay.innerHTML = "X's turn";
 		turn = "x";
 	}
+	/*if game not over and not 2 player mode, 
+		keep the player's turn on "x" and handle AI's turn*/
+	if(!twoPlayerMode && checkGameOverConditions() == ""){
+		turn = "x";
+		processAITurn();
+	}
 
+	//check if game is over
 	if(checkGameOverConditions() !== ""){
-		resetButton.style.visibility = "visible";
-		resetButton.style.margin = "5px auto 5px auto";
+		resetButton.classList.remove("hide");
 		instructionDisplay.innerHTML = "Click the button below to reset";
 		if(checkGameOverConditions() === "x"){
 			turnDisplay.innerHTML = "GAME OVER - X WINS!";
@@ -44,9 +70,7 @@ function handleButtonClick(){
 			turnDisplay.innerHTML = "GAME OVER - IT'S A TIE!";
 			markWinnerTextRed("tie");
 		}
-	}
-
-
+	}	
 }
 
 /*
@@ -88,6 +112,7 @@ function checkGameOverConditions(){
 		return "";
 	}
 }
+
 /*
 allSquaresFull() checks if all the squares of the game are full, returns true if they are,
 false if not.
@@ -103,17 +128,31 @@ resetGame() resets the game by resetting game variables such as the turn and
 clearing all game squares, then hides the reset button. Return type void.
 */
 function resetGame(){
-	turn = "x";
+	//change all squares back to black text
 	gameSquareArray.forEach(function(item){
 		item.innerHTML = "";
 		item.touched = false;
 		item.style.color = "black";
 	});
-	resetButton.style.visibility = "hidden";
-	resetButton.style.margin = "-5px";
-	turnDisplay.innerHTML = "X's turn";
-	instructionDisplay.innerHTML = "Click a square to mark it";
+	resetButton.classList.add("hide"); 
+	instructionDisplay.classList.add("hide");
+	turnDisplay.classList.add("hide");
+	gameBoard.classList.add("hide");
+	twoPlayerButton.classList.remove("hide");
+	againstAIButton.classList.remove("hide");
 }
+
+function initGame(){
+	turn = "x";
+	instructionDisplay.innerHTML = "Click a square to mark it";
+	turnDisplay.innerHTML = "X's turn";
+	twoPlayerButton.classList.add("hide");
+	againstAIButton.classList.add("hide");
+	instructionDisplay.classList.remove("hide");
+	gameBoard.classList.remove("hide");
+	turnDisplay.classList.remove("hide");
+}
+
 /*
 markWinnerTextRed() changes the color of the winner's text to red for the user to more easily
 see the victory. Return type void.
@@ -126,4 +165,21 @@ function markWinnerTextRed(winner){
 			item.style.color = "gray";
 		}
 	});
+}
+
+/*
+processAITurn() sets a random empty square to an "O" for the AI's turn. Return type void.
+*/	
+function processAITurn(){
+	var emptySquares = [];
+	var square;
+	gameSquareArray.forEach(function(item){
+		if(!item.touched){
+			emptySquares.push(item);
+		}
+	});
+	
+	square = emptySquares[Math.floor(Math.random() * emptySquares.length)];
+	square.innerHTML = "O";
+	square.touched = true;
 }
