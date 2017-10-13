@@ -88,25 +88,92 @@ function checkGameOverConditions(){
 	var b7h = gameSquareArray[7].innerHTML.toLowerCase();
 	var b8h = gameSquareArray[8].innerHTML.toLowerCase();
 	
-	if((b0h === "x" && b1h === "x" && b2h === "x") || 
-		 (b3h === "x" && b4h === "x" && b5h === "x") ||
-		 (b6h === "x" && b7h === "x" && b8h === "x") ||
-		 (b0h === "x" && b3h === "x" && b6h === "x") ||
-		 (b1h === "x" && b4h === "x" && b7h === "x") ||
-		 (b2h === "x" && b5h === "x" && b8h === "x") ||
-		 (b0h === "x" && b4h === "x" && b8h === "x") ||
-		 (b2h === "x" && b4h === "x" && b6h === "x")){
+	if(b0h === "x" && b1h === "x" && b2h === "x"){
+		gameSquareArray[0].winning = true;
+		gameSquareArray[1].winning = true;
+		gameSquareArray[2].winning = true;
 		return "x";
-	}else if((b0h === "o" && b1h === "o" && b2h === "o") || 
-		 (b3h === "o" && b4h === "o" && b5h === "o") ||
-		 (b6h === "o" && b7h === "o" && b8h === "o") ||
-		 (b0h === "o" && b3h === "o" && b6h === "o") ||
-		 (b1h === "o" && b4h === "o" && b7h === "o") ||
-		 (b2h === "o" && b5h === "o" && b8h === "o") ||
-		 (b0h === "o" && b4h === "o" && b8h === "o") ||
-		 (b2h === "o" && b4h === "o" && b6h === "o")){
-			return "o";
-	}else if(allSquaresFull()){
+	}else if(b3h === "x" && b4h === "x" && b5h === "x"){
+		gameSquareArray[3].winning = true;
+		gameSquareArray[4].winning = true;
+		gameSquareArray[5].winning = true;
+		return "x";
+	}else if(b6h === "x" && b7h === "x" && b8h === "x"){
+		gameSquareArray[6].winning = true;
+		gameSquareArray[7].winning = true;
+		gameSquareArray[8].winning = true;
+		return "x";
+	}else if(b0h === "x" && b3h === "x" && b6h === "x"){
+		gameSquareArray[0].winning = true;
+		gameSquareArray[3].winning = true;
+		gameSquareArray[6].winning = true;
+		return "x";
+	}else if(b1h === "x" && b4h === "x" && b7h === "x"){
+		gameSquareArray[1].winning = true;
+		gameSquareArray[4].winning = true;
+		gameSquareArray[7].winning = true;
+		return "x";
+	}else if(b2h === "x" && b5h === "x" && b8h === "x"){
+		gameSquareArray[2].winning = true;
+		gameSquareArray[5].winning = true;
+		gameSquareArray[8].winning = true;
+		return "x";
+	}else if(b0h === "x" && b4h === "x" && b8h === "x"){
+		gameSquareArray[0].winning = true;
+		gameSquareArray[4].winning = true;
+		gameSquareArray[8].winning = true;
+		return "x";
+	}else if(b2h === "x" && b4h === "x" && b6h === "x"){
+		gameSquareArray[2].winning = true;
+		gameSquareArray[4].winning = true;
+		gameSquareArray[6].winning = true;
+		return "x";
+	}
+	
+	if(b0h === "o" && b1h === "o" && b2h === "o"){
+		gameSquareArray[0].winning = true;
+		gameSquareArray[1].winning = true;
+		gameSquareArray[2].winning = true;
+		return "o";
+	}else if(b3h === "o" && b4h === "o" && b5h === "o"){
+		gameSquareArray[3].winning = true;
+		gameSquareArray[4].winning = true;
+		gameSquareArray[5].winning = true;
+		return "o";
+	}else if(b6h === "o" && b7h === "o" && b8h === "o"){
+		gameSquareArray[6].winning = true;
+		gameSquareArray[7].winning = true;
+		gameSquareArray[8].winning = true;
+		return "o";
+	}else if(b0h === "o" && b3h === "o" && b6h === "o"){
+		gameSquareArray[0].winning = true;
+		gameSquareArray[3].winning = true;
+		gameSquareArray[6].winning = true;
+		return "o";
+	}else if(b1h === "o" && b4h === "o" && b7h === "o"){
+		gameSquareArray[1].winning = true;
+		gameSquareArray[4].winning = true;
+		gameSquareArray[7].winning = true;
+		return "o";
+	}else if(b2h === "o" && b5h === "o" && b8h === "o"){
+		gameSquareArray[2].winning = true;
+		gameSquareArray[5].winning = true;
+		gameSquareArray[8].winning = true;
+		return "o";
+	}else if(b0h === "o" && b4h === "o" && b8h === "o"){
+		gameSquareArray[0].winning = true;
+		gameSquareArray[4].winning = true;
+		gameSquareArray[8].winning = true;
+		return "o";
+	}else if(b2h === "o" && b4h === "o" && b6h === "o"){
+		gameSquareArray[2].winning = true;
+		gameSquareArray[4].winning = true;
+		gameSquareArray[6].winning = true;
+		return "o";
+	}
+
+
+	if(allSquaresFull()){
 		return "tie";
 	}else{
 		return "";
@@ -133,6 +200,7 @@ function resetGame(){
 		item.innerHTML = "";
 		item.touched = false;
 		item.style.color = "black";
+		item.winning = false;
 	});
 	resetButton.classList.add("hide"); 
 	instructionDisplay.classList.add("hide");
@@ -163,7 +231,7 @@ see the victory. Return type void.
 */
 function markWinnerTextRed(winner){
 	gameSquareArray.forEach(function(item){
-		if(item.innerHTML.toLowerCase() === winner){
+		if(item.innerHTML.toLowerCase() === winner && item.winning){
 			item.style.color = "red";
 		}else if(winner.toLowerCase() === "tie"){
 			item.style.color = "gray";
